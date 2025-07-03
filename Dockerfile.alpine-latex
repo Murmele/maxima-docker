@@ -17,6 +17,7 @@ ENV MaximaPath=/opt/maxima
 
 RUN git clone https://git.code.sf.net/p/maxima/code ${MaximaPath} && \
     cd ${MaximaPath} && \
+    git checkout $maxima_commit && \
     ./bootstrap && \
     ./configure --enable-sbcl --prefix=/usr/local --enable-quiet-build && \
     make install && \
