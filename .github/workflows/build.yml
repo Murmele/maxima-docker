@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - '*'
-  schedule:
-    - cron: '30 5 * * 3'
 
 # Set env variables
 env:
