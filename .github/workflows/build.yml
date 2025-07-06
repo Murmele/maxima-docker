@@ -9,7 +9,7 @@ on:
 
 # Set env variables
 env:
-  DOCKER_USER: ${{secrets.DOCKER_USER}}
+  DOCKERHUB_USERNAME: ${{secrets.DOCKERHUB_USERNAME}}
   REPO_NAME: ${{secrets.REPO_NAME}}
 
 jobs:
@@ -37,8 +37,8 @@ jobs:
       - name: Login to Docker
         uses: docker/login-action@v3
         with:
-          username: ${{secrets.DOCKER_USER}}
-          password: ${{secrets.DOCKER_TOKEN}}
+          username: ${{secrets.DOCKERHUB_USERNAME}}
+          password: ${{secrets.DOCKERHUB_TOKEN}}
 
       - name: Build image for ${{matrix.image_version}}, tagging with git SHA and latest
         id: build_image
@@ -48,9 +48,9 @@ jobs:
         run: |
           docker build \
           -f Dockerfile.${{matrix.image_version}} \
-          -t ${DOCKER_USER}/${REPO_NAME}:${{matrix.image_version}}-${GITHUB_SHA} \
-          -t ${DOCKER_USER}/${REPO_NAME}:${{matrix.image_version}}-latest \
-          -t ${DOCKER_USER}/${REPO_NAME}:${{matrix.image_version}} \
+          -t ${DOCKERHUB_USERNAME}/${REPO_NAME}:${{matrix.image_version}}-${GITHUB_SHA} \
+          -t ${DOCKERHUB_USERNAME}/${REPO_NAME}:${{matrix.image_version}}-latest \
+          -t ${DOCKERHUB_USERNAME}/${REPO_NAME}:${{matrix.image_version}} \
           --cache-from=type=gha \
           --cache-to=type=gha,mode=max \
           . || echo '::error file=Dockerfile.${{matrix.image_version}},title=docker::build failed'
@@ -58,4 +58,4 @@ jobs:
       - name: Push tagged images to docker
         if: ${{ (github.event_name == 'push' || github.event_name == 'pull_request') && github.ref_protected }}
         run: |
-          docker push --all-tags $DOCKER_USER/$REPO_NAME
+          docker push --all-tags $DOCKERHUB_USERNAME/$REPO_NAME
