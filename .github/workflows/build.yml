@@ -51,7 +51,7 @@ jobs:
           -t ${DOCKERHUB_USERNAME}/${REPO_NAME}:${{matrix.image_version}} \
           --cache-from=type=gha \
           --cache-to=type=gha,mode=max \
-          . || echo '::error file=Dockerfile.${{matrix.image_version}},title=docker::build failed'
+          .
 
       - name: Push tagged images to docker
         if: ${{ (github.event_name == 'push' || github.event_name == 'pull_request') && github.ref_protected }}
