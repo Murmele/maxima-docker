@@ -8,14 +8,14 @@ IMG_TAG=debian-latest
 
 MAXIMA_COMMIT=314c889bd4bb5a4448f1c7280fb74aa0dcc57edc
 
-docker build -f Dockerfile.debian -t ${DOCKER_USERNAME}/${DOCKER_REPO_BASE}:${IMG_TAG} --build-arg $maxima_commit=$MAXIMA_COMMIT .
+docker build -f Dockerfile.debian -t ${DOCKER_USERNAME}/${DOCKER_REPO_BASE}:${IMG_TAG} --build-arg maxima_commit=$MAXIMA_COMMIT .
 docker push ${DOCKER_USERNAME}/${DOCKER_REPO_BASE}:${IMG_TAG}
 
 # Alpine + Maxima
 DOCKER_REPO_BASE="maxima-docker"
 IMG_TAG=alpine-latest
 
-docker build -f Dockerfile.alpine -t ${DOCKER_USERNAME}/${DOCKER_REPO_BASE}:${IMG_TAG} --build-arg $maxima_commit=$MAXIMA_COMMIT .
+docker build -f Dockerfile.alpine -t ${DOCKER_USERNAME}/${DOCKER_REPO_BASE}:${IMG_TAG} --build-arg maxima_commit=$MAXIMA_COMMIT .
 docker push ${DOCKER_USERNAME}/${DOCKER_REPO_BASE}:${IMG_TAG}
 
 # Alpine + Maxima + LaTeX
