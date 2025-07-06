@@ -6,14 +6,16 @@ IFS=$'\n\t'
 DOCKER_REPO_BASE="maxima-docker"
 IMG_TAG=debian-latest
 
-docker build -f Dockerfile.debian -t ${DOCKER_USERNAME}/${DOCKER_REPO_BASE}:${IMG_TAG} .
+MAXIMA_COMMIT=314c889bd4bb5a4448f1c7280fb74aa0dcc57edc
+
+docker build -f Dockerfile.debian -t ${DOCKER_USERNAME}/${DOCKER_REPO_BASE}:${IMG_TAG} --build-arg maxima_commit=$MAXIMA_COMMIT .
 docker push ${DOCKER_USERNAME}/${DOCKER_REPO_BASE}:${IMG_TAG}
 
 # Alpine + Maxima
 DOCKER_REPO_BASE="maxima-docker"
 IMG_TAG=alpine-latest
 
-docker build -f Dockerfile.alpine -t ${DOCKER_USERNAME}/${DOCKER_REPO_BASE}:${IMG_TAG} .
+docker build -f Dockerfile.alpine -t ${DOCKER_USERNAME}/${DOCKER_REPO_BASE}:${IMG_TAG} --build-arg maxima_commit=$MAXIMA_COMMIT .
 docker push ${DOCKER_USERNAME}/${DOCKER_REPO_BASE}:${IMG_TAG}
 
 # Alpine + Maxima + LaTeX
@@ -24,5 +26,5 @@ curl -X POST -L https://cloud.docker.com/api/build/v1/source/4813e645-4451-4874-
 #DOCKER_REPO_BASE="maxima-docker"
 #IMG_TAG=alpine-latex-latest
 
-#docker build -f Dockerfile.alpine+latex -t ${DOCKER_USERNAME}/${DOCKER_REPO_BASE}:${IMG_TAG} .
+#docker build -f Dockerfile.alpine+latex -t ${DOCKER_USERNAME}/${DOCKER_REPO_BASE}:${IMG_TAG} --build-arg $maxima_commit=$MAXIMA_COMMIT .
 #docker push ${DOCKER_USERNAME}/${DOCKER_REPO_BASE}:${IMG_TAG}
